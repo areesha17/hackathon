@@ -1,6 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:minihackathon/homepage.dart';
+import 'package:minihackathon/signup.dart';
 
 class home extends StatefulWidget {
   const home({ Key? key }) : super(key: key);
@@ -10,19 +10,30 @@ class home extends StatefulWidget {
 }
 
 class _homeState extends State<home> {
-  correct(){
-  var password  = "123456";
-  if (password != password){
-    print("Wrong Password \n Please try again");
-    ButtonTheme(
-      child: ElevatedButton(
-        child: Text("OK"),
-        onPressed: (){}
-      ),
-    );  
+  TextEditingController pwd = TextEditingController();
+  var input = "";
+
+  dialog() {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Wrong Password"),
+            content: Text("Please tr again"),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text(
+                    "Ok",
+                    style: TextStyle(color: Colors.black),
+                  ))
+            ],
+          );
+        });
   }
   
-  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +51,7 @@ class _homeState extends State<home> {
                 const SizedBox(
                   height: 120,
                 ),
-                Image(image: NetworkImage('https://i.pinimg.com/originals/66/22/ab/6622ab37c6db6ac166dfec760a2f2939.gif')),
+                Image(image: NetworkImage('https://thumbs.gfycat.com/CompleteShallowFlyingsquirrel-size_restricted.gif')),
                 SizedBox(height: 60.0,),
               
                 TextField(
@@ -51,6 +62,7 @@ class _homeState extends State<home> {
                   ),
                   filled: true,
                 ),
+                
                 ),
                 SizedBox(height: 20,
                 ),              
@@ -61,10 +73,30 @@ class _homeState extends State<home> {
                   hintStyle: TextStyle(
                     fontSize: 20,
                   ),
-                  filled: true,
+                 filled: true,
                 ),
-    
+                
                 ),
+
+                Container(
+                width: MediaQuery.of(context).size.width * 0.3,
+                height: 38,
+                child: ElevatedButton(
+                  onPressed: () {
+                    if (input == "123456") {
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (context) => homepage()));
+                    } else {
+                      setState(() {
+                        dialog();
+                      });
+                      pwd.clear();
+                    }
+                  },
+                   child : Text(""),
+                ),
+                ),
+                      
                 const SizedBox(
               height: 20,
               width: 25,
@@ -74,10 +106,12 @@ class _homeState extends State<home> {
                 ButtonTheme(
                   height: 40,
                   buttonColor: Colors.white,
+                  
                   child: ElevatedButton(
+                    
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(builder: (context) => homepage()));
-                      correct();
+                      
                     },
                     child: Text('Login',
                         style: TextStyle(fontSize: 25, color: Colors.black)),
@@ -86,18 +120,31 @@ class _homeState extends State<home> {
                 const SizedBox(
                   height: 20,
                 ),
-                const Text('Not have an account? Register',
+                TextButton(
+                  onPressed: (){
+                     Navigator.of(context).push(MaterialPageRoute(builder: (context) => signup()));
+
+                  },
+                  child: Text('Not have an account? Register',
                     style: TextStyle(
                       fontSize: 18,
                       color: Colors.black,
                     )),
+                  
+                    ),
                ],         
             ),     
           ],
             ),
-          ]
-        ),
-        ),
+                
+              
+          
+                
+        
+          ],
+                ),
+            ),
+        
       );
   }
 }
